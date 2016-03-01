@@ -28,7 +28,7 @@ class Client:
         
     def disconnect(self):
         # TODO: Handle disconnection
-        self.send_payload()
+        # LOGOUT
         self.connection.close()
 
     def receive_message(self, message):
