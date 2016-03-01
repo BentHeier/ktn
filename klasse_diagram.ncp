@@ -1,0 +1,101 @@
+<Project>
+  <Name>KTN</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>test</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>MessageReciever</Name>
+        <Access>Public</Access>
+        <Location left="53" top="79" />
+        <Size width="279" height="111" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public MessageReciever(Client client, Socket connection)</Member>
+        <Member type="Method">public void run()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MessageParser</Name>
+        <Access>Public</Access>
+        <Location left="394" top="44" />
+        <Size width="163" height="179" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">dict possible_responses</Member>
+        <Member type="Method">public String parse()</Member>
+        <Member type="Method">public String parse_error()</Member>
+        <Member type="Method">public String parse_info()</Member>
+        <Member type="Method">public String parse_message()</Member>
+        <Member type="Method">public String parse_history()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Client</Name>
+        <Access>Public</Access>
+        <Location left="413" top="327" />
+        <Size width="166" height="179" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Client(string host, int port)</Member>
+        <Member type="Method">public void run()</Member>
+        <Member type="Method">public void disconnect()</Member>
+        <Member type="Method">public void display_message()</Member>
+        <Member type="Method">public void send_payload()</Member>
+        <Member type="Method">public void clear()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ClientHandler</Name>
+        <Access>Public</Access>
+        <Location left="17" top="525" />
+        <Size width="240" height="162" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">string ip</Member>
+        <Member type="Field">int port</Member>
+        <Member type="Field">Socket connection</Member>
+        <Member type="Method">public void handle()</Member>
+        <Member type="Method">public void change_username(String username)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ThreadedTCPServer</Name>
+        <Access>Public</Access>
+        <Location left="322" top="559" />
+        <Size width="163" height="94" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">bool allow_reuse_address</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Dependency" first="0" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="1" second="2">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="4" second="3">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="3" second="0">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="2" second="3">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
