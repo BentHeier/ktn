@@ -9,6 +9,11 @@ must be written here (e.g. a dictionary for connected clients)
 users = {}
 
 
+def broadcast(message):
+    for user in users:
+        user.connection.send(message)
+
+
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
     This is the ClientHandler class. Everytime a new client connects to the
@@ -16,6 +21,10 @@ class ClientHandler(SocketServer.BaseRequestHandler):
     only connected clients, and not the server itself. If you want to write
     logic for the server, you must write it outside this class
     """
+    ip = None
+    port = None
+    connection = None
+    username = None
 
     def handle(self):
         """
@@ -25,6 +34,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.port = self.client_address[1]
         self.connection = self.request
 
+        users[self.ip] = self
         # Loop that listens for messages from the client
         while True:
             received_string = self.connection.recv(4096)
