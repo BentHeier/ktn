@@ -1,0 +1,8 @@
+Client connects to the server via TCP and the server saves the connection.
+The server then listen to messages sent from the client which are encoded with JSON.
+The user can now use two commands: login and help. The user can then proceed to log into the system with a username.
+When accepted by the server, it sends the history log of messages to the client which is displayed on the screen.
+The user can then send messages or use commands (e.g help, names, logout).
+The client will constantly be listening to input from the user and then send the request to be handlet by the server.
+When the server receives a message, the message is put into the history log and broadcast to every connected user.
+The clients recieve the message from the server and displays it on screen.
