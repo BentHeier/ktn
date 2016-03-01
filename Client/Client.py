@@ -46,9 +46,9 @@ class Client:
 
     def clear(self):
         if platform.system() == "Windows":
-            os.system("cls")
+            _ = os.system("cls")
         else:
-            os.system("clear")
+            _ = os.system("clear")
 
 
 if __name__ == '__main__':
