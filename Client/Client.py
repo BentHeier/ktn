@@ -2,6 +2,8 @@
 import socket
 from MessageReceiver import MessageReceiver
 from MessageParser import MessageParser
+import os
+import platform
 
 
 class Client:
@@ -41,6 +43,12 @@ class Client:
         
     def display_message(self, message):
         print message
+
+    def clear(self):
+        if platform.system() == "Windows":
+            os.system("cls")
+        else:
+            os.system("clear")
 
 
 if __name__ == '__main__':
