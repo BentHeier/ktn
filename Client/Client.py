@@ -3,6 +3,7 @@ import socket
 from MessageReceiver import MessageReceiver
 from MessageParser import MessageParser
 
+
 class Client:
     """
     This is the chat client class
@@ -17,6 +18,8 @@ class Client:
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
         # TODO: Finish init process with necessary code
+        self.host = host
+        self.server_port = server_port
         self.run()
 
     def run(self):
@@ -25,7 +28,8 @@ class Client:
         
     def disconnect(self):
         # TODO: Handle disconnection
-        pass
+        self.send_payload()
+        self.connection.close()
 
     def receive_message(self, message):
         # TODO: Handle incoming message
@@ -35,7 +39,8 @@ class Client:
         # TODO: Handle sending of a payload
         pass
         
-    # More methods may be needed!
+    def display_message(self, message):
+        print message
 
 
 if __name__ == '__main__':
