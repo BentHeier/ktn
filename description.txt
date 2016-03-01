@@ -1,13 +1,21 @@
 Client connects to the server via TCP and the server saves the connection.
 The server then listen to messages sent from the client which are encoded with JSON.
-The user can now use two commands: login and help. The user can then proceed to log into the system with a username or type help to get directions on how to log in. 
-When accepted by the server, the server spawn a new clienthandler deamon, then it sends the history log of messages to the client which is displayed on the screen.
+The user can now use two commands: login and help. The user can then proceed to log into the system with a username or
+type help to get directions on how to log in.
+When accepted by the server, the server spawn a new clienthandler deamon, then it sends the history log of messages to
+the client which clears its screen and displays the message.
+
 The user can then send messages or use commands (e.g help, names, logout).
 The client will constantly be listening to input from the user and then send the request to be handlet by the server.
 When the server receives a message, the message is put into the history log and broadcast to every connected user.
 The clients recieve the message from the server and displays it on screen.
-When the client disconnects the server will kill the clienthandler deamon and brodcast a message that the user have quit and save the reason for quitting (initiated via a command or client disconnected), if the client stop responding unexpectedly the server will try to reconnect for 2 minutes before it drops the connection. 
-When the server is terminated it will broadcast a message that the server is going down for maintaince and all clients will be diconnected.
 
-On the client side, when a message is sent it will be passed to MessageParser and then be translated to a JSON querry and then sent on to the server. 
-Messages are recived by MessageReciver, then sent to the MessageParser whom transolates the message from JSON back to human readable text wcich in turn are sent to the Client class which handels the display functonallity.
+When the client disconnects the server will kill the clienthandler deamon and brodcast a message that the user have quit
+and save the reason for quitting (initiated via a command or client disconnected), if the client stop responding
+unexpectedly the server will try to reconnect for 2 minutes before it drops the connection.
+When the server is terminated it will broadcast a message that the server is going down for maintaince and all clients
+will be diconnected.
+
+On the client side, when a message is sent it will be translated to a JSON query and then sent on to the server.
+Messages are recived by MessageReciver, then sent to the MessageParser whom transolates the message from JSON back to
+human readable text wcich in turn are sent to the Client class which handels the display functonallity.
