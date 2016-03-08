@@ -1,5 +1,12 @@
 import json
+import os
+import platform
 
+def clear():
+        if platform.system() == "Windows":
+            _ = os.system("cls")
+        else:
+            _ = os.system("clear")
 
 class MessageParser:
     def __init__(self):
@@ -22,18 +29,25 @@ class MessageParser:
             pass
 
     def parse_error(self, payload):
-        message = payload['timestamp'] + "Error: " + payload['content']
+        message = "Error: " + payload['content']
         return message
 
     def parse_info(self, payload):
-        message = payload['timestamp'] + "Info: " + payload['content']
+        #message = payload['timestamp'] + "Info: " + payload['content']
+        message = payload['content']
         return message
 
     def parse_message(self, payload):
-        message = payload['timestamp'] + payload['sender'] + payload['content']
+        message = payload['timestamp'] + " " + payload['sender'] + ": " + payload['content']
         return message
 
     def parse_history(self, payload):
-        pass
+        clear()
+        li = payload['content']
+        retr = ""
+        for i in li:
+            time, user, msg = i
+            retr += time + " " + user + ": " + msg + "\n"
+        return retr[:-1]
 
     # Include more methods for handling the different responses...

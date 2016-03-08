@@ -23,9 +23,11 @@ MESSAGE FORMAT:
  }
 """
 
+
 def broadcast(message):
-    for user in users:
-        user.connection.send(message)
+    for ip in users:
+        users[ip].connection.send(message)
+
 
 def get_timestamp():
         return datetime.datetime.fromtimestamp(time.time()).strftime('%H:%M')
@@ -50,12 +52,15 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.port = self.client_address[1]
         self.connection = self.request
 
-        users[self.ip] = self
+        users[self.client_address] = self
+
+        print "Connection accepted:", self.client_address
         # Loop that listens for messages from the client
         while True:
             received_string = self.connection.recv(4096)
             # TODO: Add handling of received payload from client
             if received_string:
+                print "Received", received_string, "from", self.client_address
                 package = json.loads(received_string)
                 request = package['request']
                 content = package['content']
@@ -63,36 +68,40 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 if request == "login":
                     self.change_username(content)
                 elif request == "help":
-                    help = "login <username> - log in with the given username\nlogout - log out\n" \
-                           "msg <message> - send message\nnames - list users in chat\nhelp - view help text\n"
-                    self.send_payload(SERVER_NAME, "Info", help)
+                    help_msg = "    login <username> - log in with the given username\n    logout - log out\n" \
+                           "    msg <message> - send message\n    names - list users in chat\n    help - view help text"
+                    self.send_payload(SERVER_NAME, "info", help_msg)
                 elif request == "logout" and self.username:
                     self.connection.close()
-                    del users[self.ip]
+                    del users[self.client_address]
                     break
                 elif request == "msg" and self.username:
                     history.append((get_timestamp(), self.username, content))
-                    self.send_payload(self.username, "Message", content, True)
+                    self.send_payload(self.username, "message", content, True)
                 elif request == "names" and self.username:
                     user_names = ""
-                    for user in users:
-                        user_names += user.username + "\n"
-                    self.send_payload(SERVER_NAME, "Info", user_names)
+                    for ip in users:
+                        user_names += "    " + users[ip].username + "\n"
+                    self.send_payload(SERVER_NAME, "info", user_names)
                 else:
-                    self.send_payload(SERVER_NAME, "Error", "Bad request")
+                    self.send_payload(SERVER_NAME, "error", "Bad request")
 
     def send_payload(self, sender, response, content, do_broadcast=False):
-        message = json.dumps({get_timestamp(), sender, response, content})
+        message = json.dumps({'timestamp': get_timestamp(), 'sender': sender, 'response': response, 'content': content})
+        print "Sending:", message, "to", self.client_address
         if do_broadcast:
             broadcast(message)
         else:
             self.connection.send(message)
 
     def change_username(self, username):
+        print "Requested login", username, "from", self.client_address
         if username.isalnum():
             self.username = username
+            self.send_payload(SERVER_NAME, "info", "Login successful")
+            self.send_payload(SERVER_NAME, "history", history)
         else:
-            self.send_payload(SERVER_NAME, "Error", "Usernames must be letters and numbers only")
+            self.send_payload(SERVER_NAME, "error", "Usernames must be letters and numbers only")
 
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):

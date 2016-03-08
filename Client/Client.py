@@ -2,8 +2,6 @@
 import socket
 from MessageReceiver import MessageReceiver
 from MessageParser import MessageParser
-import os
-import platform
 import json
 
 
@@ -28,16 +26,14 @@ class Client:
         # Start a MessageReceiver thread
         receiver = MessageReceiver(self, self.connection)
         receiver.start()
-        receiver.run()
 
         # Create a MessageParser object for use later
         self.parser = MessageParser()
 
-
         # Loop to handle continuously reading from input
         while True:
             user_input = raw_input()
-            if user_input != None:
+            if user_input is not None:
                 self.send_payload(user_input)
 
     def run(self):
@@ -51,9 +47,8 @@ class Client:
 
     def receive_message(self, message):
         # TODO: Handle incoming message
-        parsedMessage = self.parser.parse(message)
-        self.display_message(parsedMessage)
-
+        parsed_message = self.parser.parse(message)
+        self.display_message(parsed_message)
 
     def send_payload(self, data):
         # TODO: Handle sending of a payload
@@ -64,28 +59,22 @@ class Client:
         if firstWord == 'login':
             # Find username from data_string
             username = input_splitted[1]
-            payload = json.dumps( { "request" : "login", "content" : "username" } )
+            payload = json.dumps({"request": "login", "content": username})
 
         elif firstWord == 'logout':
-            payload = json.dumps( { "request" : "logout", "content" : None } )
-        elif firstWord == 'names' :
-            payload = json.dumps( { "request" : "names", "content" : None } )
-        elif firstWord == 'help' :
-            payload = json.dumps( { "request" : "help", "content" : None } )
+            payload = json.dumps({"request": "logout", "content": None})
+        elif firstWord == 'names':
+            payload = json.dumps({"request": "names", "content": None})
+        elif firstWord == 'help':
+            payload = json.dumps({"request": "help", "content": None})
         else:
             # Find message from the data string
-            message = input_splitted[1]
-            payload = json.dumps( {"request" : "msg", "content" : message } )
+            message = data
+            payload = json.dumps({"request": "msg", "content": message})
         self.connection.send(payload)
         
     def display_message(self, message):
         print message
-
-    def clear(self):
-        if platform.system() == "Windows":
-            _ = os.system("cls")
-        else:
-            _ = os.system("clear")
 
 
 if __name__ == '__main__':
