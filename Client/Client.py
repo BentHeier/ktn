@@ -33,7 +33,7 @@ class Client:
         # Loop to handle continuously reading from input
         while True:
             user_input = raw_input()
-            if user_input is not None:
+            if user_input is not None and user_input is not "":
                 self.send_payload(user_input)
 
     def run(self):
@@ -41,23 +41,22 @@ class Client:
         self.connection.connect((self.host, self.server_port))
         
     def disconnect(self):
-        # TODO: Handle disconnection
         # LOGOUT
         self.connection.close()
 
     def receive_message(self, message):
-        # TODO: Handle incoming message
         parsed_message = self.parser.parse(message)
         self.display_message(parsed_message)
 
     def send_payload(self, data):
-        # TODO: Handle sending of a payload
         input_splitted = data.split(' ', 1)
         firstWord = input_splitted[0]
 
         # Create json object based on the structure of the data string
         if firstWord == 'login':
             # Find username from data_string
+            if len(input_splitted) is not 2 or input_splitted[1] is "":
+                return
             username = input_splitted[1]
             payload = json.dumps({"request": "login", "content": username})
 
@@ -84,4 +83,4 @@ if __name__ == '__main__':
 
     No alterations are necessary
     """
-    client = Client('localhost', 9998)
+    client = Client('78.91.25.10', 9998)

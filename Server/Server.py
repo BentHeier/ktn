@@ -3,6 +3,7 @@ import SocketServer
 import json
 import datetime
 import time
+import select
 
 """
 Variables and functions that must be used by all the ClientHandler objects
@@ -13,20 +14,11 @@ SERVER_NAME = "Server"
 users = {}
 history = []
 
-"""
-MESSAGE FORMAT:
-{
-'timestamp': <timestampt>,
- 'sender': <username>,
- 'response': <response>,
- 'content': <content>,
- }
-"""
-
 
 def broadcast(message):
     for ip in users:
-        users[ip].connection.send(message)
+        if users[ip].username is not None:
+            users[ip].connection.send(message)
 
 
 def get_timestamp():
@@ -52,39 +44,46 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.port = self.client_address[1]
         self.connection = self.request
 
+        #self.connection.setblocking(0)
+
         users[self.client_address] = self
 
         print "Connection accepted:", self.client_address
         # Loop that listens for messages from the client
-        while True:
-            received_string = self.connection.recv(4096)
-            # TODO: Add handling of received payload from client
-            if received_string:
-                print "Received", received_string, "from", self.client_address
-                package = json.loads(received_string)
-                request = package['request']
-                content = package['content']
+        try:
+            while True:
+                received_string = self.connection.recv(4096)
+                if received_string:
+                    print "Received", received_string, "from", self.client_address
+                    package = json.loads(received_string)
+                    request = package['request']
+                    content = package['content']
 
-                if request == "login":
-                    self.change_username(content)
-                elif request == "help":
-                    help_msg = "    login <username> - log in with the given username\n    logout - log out\n" \
-                           "    msg <message> - send message\n    names - list users in chat\n    help - view help text"
-                    self.send_payload(SERVER_NAME, "info", help_msg)
-                elif request == "logout" and self.username:
-                    self.connection.close()
-                    del users[self.client_address]
-                    break
-                elif request == "msg" and self.username:
-                    history.append((get_timestamp(), self.username, content))
-                    self.send_payload(self.username, "message", content, True)
-                elif request == "names" and self.username:
-                    user_names = ""
-                    for ip in users:
-                        user_names += "    " + users[ip].username + "\n"
-                    self.send_payload(SERVER_NAME, "info", user_names)
-                else:
-                    self.send_payload(SERVER_NAME, "error", "Bad request")
+                    if request == "login":
+                        self.change_username(content)
+                    elif request == "help":
+                        help_msg = "    login <username> - log in with the given username\n    logout - log out\n" \
+                                    "    msg <message> - send message\n    names - list users in chat" \
+                                   "\n    help - view help text"
+                        self.send_payload(SERVER_NAME, "info", help_msg)
+                    elif request == "logout" and self.username:
+                        del users[self.client_address]
+                        self.connection.close()
+                        break
+                    elif (request == "msg" or not request) and self.username:
+                        history.append((get_timestamp(), self.username, content))
+                        self.send_payload(self.username, "message", content, True)
+                    elif request == "names" and self.username:
+                        user_names = ""
+                        for ip in users:
+                            user_names += "    " + users[ip].username + "\n"
+                        self.send_payload(SERVER_NAME, "info", user_names)
+                    else:
+                        self.send_payload(SERVER_NAME, "error", "Bad request")
+        except:
+            print "Connection error with", self.username,  self.client_address
+            del users[self.client_address]
+            self.connection.close()
 
     def send_payload(self, sender, response, content, do_broadcast=False):
         message = json.dumps({'timestamp': get_timestamp(), 'sender': sender, 'response': response, 'content': content})
@@ -120,7 +119,7 @@ if __name__ == "__main__":
 
     No alterations are necessary
     """
-    HOST, PORT = 'localhost', 9998
+    HOST, PORT = '78.91.25.10', 9998
     print 'Server running...'
 
     # Set up and initiate the TCP server
