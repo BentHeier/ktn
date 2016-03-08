@@ -24,6 +24,10 @@ class Client:
         self.server_port = server_port
         self.run()
 
+	# Start a MessageReceiver thread
+	receiver = MessageReceiver(self, self.connection);
+	receiver.run()
+
     def run(self):
         # Initiate the connection to the server
         self.connection.connect((self.host, self.server_port))
