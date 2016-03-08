@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a1ded0c4-6cb6-42a3-8e25-4a181cc90047" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/Client.py" afterPath="$PROJECT_DIR$/Client/Client.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/MessageParser.py" afterPath="$PROJECT_DIR$/Client/MessageParser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/Server.py" afterPath="$PROJECT_DIR$/Server/Server.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="ktn.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,8 +33,8 @@
           <file leaf-file-name="Client.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Client/Client.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5989933">
-                  <caret line="71" column="26" selection-start-line="71" selection-start-column="26" selection-end-line="71" selection-end-column="26" />
+                <state vertical-scroll-proportion="0.28691274">
+                  <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
                   <folding>
                     <element signature="e#24#37#0" expanded="true" />
                   </folding>
@@ -121,8 +120,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Client/MessageReceiver.py" />
         <option value="$PROJECT_DIR$/Client/MessageParser.py" />
-        <option value="$PROJECT_DIR$/Client/Client.py" />
         <option value="$PROJECT_DIR$/Server/Server.py" />
+        <option value="$PROJECT_DIR$/Client/Client.py" />
       </list>
     </option>
   </component>
@@ -672,22 +671,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client/Client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5989933">
-          <caret line="71" column="26" selection-start-line="71" selection-start-column="26" selection-end-line="71" selection-end-column="26" />
-          <folding>
-            <element signature="e#24#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Server/Server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6577181">
           <caret line="122" column="34" selection-start-line="122" selection-start-column="34" selection-end-line="122" selection-end-column="34" />
           <folding>
             <element signature="e#24#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/Client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28691274">
+          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+          <folding>
+            <element signature="e#24#37#0" expanded="true" />
           </folding>
         </state>
       </provider>

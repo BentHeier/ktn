@@ -1,4 +1,4 @@
-# Dette er et ~~yolo~~ KTN prsojekt.
+# Dette er et yolo KTN prsojekt.
 
 ## Program brukt for klassediagram (bare for windows)
 
