@@ -55,30 +55,31 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         while True:
             received_string = self.connection.recv(4096)
             # TODO: Add handling of received payload from client
-            package = json.loads(received_string)
-            request = package['request']
-            content = package['content']
+            if received_string:
+                package = json.loads(received_string)
+                request = package['request']
+                content = package['content']
 
-            if request == "login":
-                self.change_username(content)
-            elif request == "help":
-                help = "login <username> - log in with the given username\nlogout - log out\n" \
-                       "msg <message> - send message\nnames - list users in chat\nhelp - view help text\n"
-                self.send_payload(SERVER_NAME, "Info", help)
-            elif request == "logout" and self.username:
-                self.connection.close()
-                del users[self.ip]
-                break
-            elif request == "msg" and self.username:
-                history.append((get_timestamp(), self.username, content))
-                self.send_payload(self.username, "Message", content, True)
-            elif request == "names" and self.username:
-                user_names = ""
-                for user in users:
-                    user_names += user.username + "\n"
-                self.send_payload(SERVER_NAME, "Info", user_names)
-            else:
-                self.send_payload(SERVER_NAME, "Error", "Bad request")
+                if request == "login":
+                    self.change_username(content)
+                elif request == "help":
+                    help = "login <username> - log in with the given username\nlogout - log out\n" \
+                           "msg <message> - send message\nnames - list users in chat\nhelp - view help text\n"
+                    self.send_payload(SERVER_NAME, "Info", help)
+                elif request == "logout" and self.username:
+                    self.connection.close()
+                    del users[self.ip]
+                    break
+                elif request == "msg" and self.username:
+                    history.append((get_timestamp(), self.username, content))
+                    self.send_payload(self.username, "Message", content, True)
+                elif request == "names" and self.username:
+                    user_names = ""
+                    for user in users:
+                        user_names += user.username + "\n"
+                    self.send_payload(SERVER_NAME, "Info", user_names)
+                else:
+                    self.send_payload(SERVER_NAME, "Error", "Bad request")
 
     def send_payload(self, sender, response, content, do_broadcast=False):
         message = json.dumps({get_timestamp(), sender, response, content})

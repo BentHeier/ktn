@@ -10,10 +10,10 @@ class MessageReceiver(Thread):
     """
 
     def __init__(self, client, connection):
+        super(MessageReceiver, self).__init__(None, self.run, "something")
         """
         This method is executed when creating a new MessageReceiver object
         """
-
         # Flag to run thread as a deamon
         self.daemon = True
 
