@@ -27,6 +27,7 @@ class Client:
 
         # Start a MessageReceiver thread
         receiver = MessageReceiver(self, self.connection)
+	receiver.start()
         receiver.run()
 
         # Create a MessageParser object for use later
