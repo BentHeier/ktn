@@ -22,15 +22,18 @@ class MessageParser:
             pass
 
     def parse_error(self, payload):
-        pass
+	message = payload['timestamp'] + "Error: " + payload['content']
+	return message
 
     def parse_info(self, payload):
-        pass
+	message = payload['timestamp'] + "Info: " + payload['content']
+	return message
 
     def parse_message(self, payload):
-        pass
+	message = payload['timestamp'] + payload['sender'] + payload['content']
+	return message
 
     def parse_history(self, payload):
-        pass
+	pass
 
     # Include more methods for handling the different responses...
