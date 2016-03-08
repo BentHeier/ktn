@@ -24,6 +24,7 @@ def broadcast(message):
 def get_timestamp():
         return datetime.datetime.fromtimestamp(time.time()).strftime('%H:%M')
 
+
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
     This is the ClientHandler class. Everytime a new client connects to the
