@@ -64,6 +64,26 @@
         <Member type="Field">bool allow_reuse_address</Member>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Comment">
+        <Text>Sends to</Text>
+        <Location left="161" top="327" />
+        <Size width="75" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Parses the message</Text>
+        <Location left="491" top="241" />
+        <Size width="74" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Sends to</Text>
+        <Location left="505" top="525" />
+        <Size width="68" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Recieves and pass the message</Text>
+        <Location left="300" top="196" />
+        <Size width="86" height="63" />
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Dependency" first="0" second="1">
